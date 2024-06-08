@@ -1,0 +1,192 @@
+{% extends 'base.html' %} {% load static %}
+     {% block content %}
+        <!-- main-area -->
+        <main class="fix">
+
+            <!-- breadcrumb-area -->
+            <div class="breadcrumb-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="breadcrumb-content">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Maqolalar</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- breadcrumb-area-end -->
+
+            <!-- blog-area -->
+            <section class="blog-area pt-60 pb-60">
+                <div class="container">
+                    <div class="author-inner-wrap blog-inner-wrap">
+                        <div class="row justify-content-center">
+                            <div class="col-70 order-0 order-xl-2">
+                                <div class="weekly-post-item-wrap">
+                                    {% for b in blogs %}
+                                    <div class="weekly-post-item weekly-post-four">
+                                        <div class="weekly-post-thumb">
+                                            <a href="{% url 'blog_detail' b.slug %}"><img src="{{b.image.url}}" alt=""></a>
+                                        </div>
+                                        <div class="weekly-post-content">
+                                            <a href="{% url 'blog_category' b.category.slug %}" class="post-tag">{{b.category.name}}</a>
+                                            <h2 class="post-title"><a href="{% url 'blog_detail' b.slug %}">{{b.title}}</a></h2>
+                                            <div class="blog-post-meta">
+                                                <ul class="list-wrap">
+                                                    <li><i class="flaticon-calendar"></i>{{b.date|date:"d.m.Y"}}</li>
+                                                    <li><i class="fa-solid fa-eye"></i>{{b.views_count}}</li>
+                                                </ul>
+                                            </div>
+                                            <p>{{b.sub_title|default:""}}</p>
+                                            <div class="view-all-btn">
+                                                <a href="{% url 'blog_detail' b.slug %}" class="link-btn">Ko'proq
+                                                    <span class="svg-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="none">
+                                                            <path d="M1.07692 10L0 8.92308L7.38462 1.53846H0.769231V0H10V9.23077H8.46154V2.61538L1.07692 10Z" fill="currentColor" />
+                                                            <path d="M1.07692 10L0 8.92308L7.38462 1.53846H0.769231V0H10V9.23077H8.46154V2.61538L1.07692 10Z" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% empty %}
+                                    <p>Siz qidirgan "{{search}}" bo'yicha maqolalar mavjud emas</p>
+                                    {% endfor %}
+                                    
+                                </div>
+                                <div class="pagination-wrap mt-60">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination list-wrap">
+                                         {% if blogs.has_previous %}
+                                        
+                                        <li class="page-item"><a class="page-link" href="?page={{blogs.previous_page_number}}"><</a></li>
+                                        {% endif %} 
+                                        {% for i in blogs.paginator.page_range %}
+                                              {% if blogs.number == i %}
+                                                <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                                              {% else %}
+                                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                              {% endif %}
+                                        {% endfor %}
+                                        {% if blogs.has_next %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ blogs.next_page_number }}">></a></li>
+
+                                        {% endif %}
+
+
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="col-30">
+                                <div class="sidebar-wrap">
+                                    <div class="sidebar-widget">
+                                        <div class="sidebar-search">
+                                            <form action="{% url 'search' %}" method="GET">
+                                                <input name="search" type="text" placeholder="Qidirish . . .">
+                                                <button type="submit"><i class="flaticon-search"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-widget sidebar-widget-two">
+                                        <div class="widget-title mb-30">
+                                            <h6 class="title">Kategoriyalar</h6>
+                                            <div class="section-title-line"></div>
+                                        </div>
+                                        <div class="sidebar-categories">
+                                            <ul class="list-wrap">
+                                                {% for c in ct %}
+                                                <li>
+                                                    <a href="{% url 'blog_category' c.slug %}" data-background="{{c.image.url}}">
+                                                        <span class="post-tag post-tag-three">{{c.name}}</span>
+                                                        <span class="right-arrow">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
+                                                                <path d="M1.72308 16L0 14.2769L11.8154 2.46154H1.23077V0H16V14.7692H13.5385V4.18462L1.72308 16Z" fill="currentcolor"></path>
+                                                                <path d="M1.72308 16L0 14.2769L11.8154 2.46154H1.23077V0H16V14.7692H13.5385V4.18462L1.72308 16Z" fill="currentcolor"></path>
+                                                            </svg>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-widget sidebar-widget-two">
+                                        <div class="widget-title mb-25">
+                                            <h2 class="title">Hash teglar</h2>
+                                            <div class="section-title-line"></div>
+                                        </div>
+                                        <div class="sidebar-social-wrap">
+                                            <ul class="list-wrap">
+                                                {% for t in tags %}
+                                                <li><a href="#">{{t.name}}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-widget sidebar-widget-two">
+                                        <div class="widget-title mb-30">
+                                            <h6 class="title">Top maqolalar</h6>
+                                            <div class="section-title-line"></div>
+                                        </div>
+                                        <div class="hot-post-wrap">
+                                            {% for b in top_blogs %}
+                                            <div class="hot-post-item">
+                                                <div class="hot-post-thumb">
+                                                    <a href="{% url 'blog_detail' b.slug %}"><img src="{{b.image.url}}" alt=""></a>
+                                                </div>
+                                                <div class="hot-post-content">
+                                                    <a href="{% url 'blog_category' b.category.slug %}" class="post-tag">{{b.category.name}}</a>
+                                                    <h4 class="post-title"><a href="{% url 'blog_detail' b.slug %}">{{b.title}}</a></h4>
+                                                    <div class="blog-post-meta">
+                                                        <ul class="list-wrap">
+                                                            <li><i class="flaticon-calendar"></i>{{b.date|date:"d.m.Y"}}</li>
+                                                            <li><i class="fa-solid fa-eye"></i>{{b.views_num}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-widget sidebar-widget-two">
+                                        <div class="sidebar-newsletter">
+                                            <div class="icon"><i class="flaticon-envelope"></i></div>
+                                            <h4 class="title">Daily Newsletter</h4>
+                                            <p>Get all the top stories from Blogs to keep track.</p>
+                                            <div class="sidebar-newsletter-form-two">
+                                                <form action="#">
+                                                    <div class="form-grp">
+                                                        <input type="text" placeholder="Enter your e-mail">
+                                                        <button type="submit" class="btn">Subscribe Now</button>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="checkbox">
+                                                        <label for="checkbox">I agree to the terms & conditions</label>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- blog-area-end -->
+
+          
+
+        </main>
+        <!-- main-area-end -->
+
+        {% endblock %}

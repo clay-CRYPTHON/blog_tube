@@ -1,0 +1,112 @@
+{% extends 'base.html' %} {% load static %}
+     {% block content %}
+        <!-- main-area -->
+        <main class="fix">
+
+            <!-- breadcrumb-area -->
+            <div class="breadcrumb-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="breadcrumb-content">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Bog'lanish</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- breadcrumb-area-end -->
+
+            <!-- contact-area -->
+            <section class="contact-area pt-80 pb-50">
+                <div class="container">
+                    <div class="contact-info-wrap">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-4 col-lg-6">
+                                <div class="contact-info-item">
+                                    <div class="icon" style="min-width: 20%;max-width: 20%;">
+                                        <img src="{{sec.img1.url}}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="title">{{sec.title1}}</h5>
+                                        <p>{{sec.title1_name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6">
+                                <div class="contact-info-item">
+                                    <div class="icon" style="min-width: 20%;max-width: 20%;">
+                                        <img src="{{sec.img2.url}}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="title">{{sec.title2}}</h5>
+                                        <p>{{sec.title2_name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6">
+                                <div class="contact-info-item">
+                                    <div class="icon" style="min-width: 20%;max-width: 20%;">
+                                        <img src="{{sec.img3.url}}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="title">{{sec.title3}}</h5>
+                                        <p>{{sec.title3_name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 col-md-10">
+                            <div class="contact-img">
+                                <img src="{{sec.image.url}}" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="contact-form">
+                                <h4 class="title">{{sec.form_title}}</h4>
+                                <p>{{sec.form_content}}</p>
+                                <form id="contact-form"  method="POST"> {% csrf_token %}
+                                    <p style="color: green;">{{msg}}</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-grp">
+                                                <input required type="text" name="full_name" placeholder="FIO*"  {% if request.user.is_authenticated %} value="{{request.user.full_name}}" {% endif %}>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-grp">
+                                                <input required type="text" name="email_or_phone" {% if request.user.is_authenticated %} value="{{request.user.email}}" {% endif %} placeholder="Telefon raqam yoki email*">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-grp">
+                                        <textarea required name="message" placeholder="Xabaringiz*"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-two">{{sec.form_btn_name}}</button>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- contact-area-end -->
+
+            <!-- contact-map -->
+            <div class="contact-map">
+                {{sec.google_map|safe}}
+            </div>
+            <!-- contact-map-end -->
+
+
+        </main>
+        <!-- main-area-end -->
+
+        {% endblock %}

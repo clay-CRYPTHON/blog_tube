@@ -1,0 +1,233 @@
+{% extends 'base.html' %} {% load static %}{% load hitcount_tags %}
+
+     {% block content %}
+
+        <!-- main-area -->
+        <main class="fix">
+
+            <!-- breadcrumb-area -->
+            <div class="breadcrumb-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="breadcrumb-content">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                                        <li class="breadcrumb-item" aria-current="page"><a href="{% url 'blogs' %}">Maqolalar</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{b.title}}</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- breadcrumb-area-end -->
+
+            <!-- blog-details-area -->
+            <section class="blog-details-area pt-60 pb-60">
+                <div class="container">
+                    <div class="author-inner-wrap">
+                        <div class="row justify-content-center">
+                            <div class="col-70">
+                                <div class="blog-details-wrap">
+                                    <div class="blog-details-content">
+                                        <div class="blog-details-content-top">
+                                            <a href="{% url 'blog_category' b.category.slug %}" class="post-tag">{{b.category.name}}</a>
+                                            <h2 class="title">{{b.title}}</h2>
+                                            <div class="bd-content-inner">
+                                                <div class="blog-post-meta">
+                                                    <ul class="list-wrap">
+                                                        <li><i class="flaticon-user"></i>Muallif<a href="{% url 'author' b.user.uuid %}">{{b.user.full_name}}</a></li>
+                                                        <li><i class="flaticon-calendar"></i>{{b.date|date:"d.m.Y H:i"}}</li>
+                                                        <li><i class="flaticon-chat"></i><a href="">{{b.comments.count}} Izohlar</a></li>
+                                                        <li><i class="fa-solid fa-eye"></i>{{b.views_count}}</li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="blog-details-thumb">
+                                            <img src="{{b.image.url}}" alt="">
+                                        </div>
+                                        {% if b.sub_title %}
+                                        <blockquote>
+                                            <p>{{b.sub_title}}</p>
+                                            
+                                        </blockquote>
+                                        {% endif %}
+                                        {{b.content|safe}}
+                                        <div class="blog-details-bottom">
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-6">
+                                                    <div class="post-tags">
+                                                        <h5 class="title">Hash taglar:</h5>
+                                                        <ul class="list-wrap">
+                                                            {% for t in b.hashtags %}
+                                                            <li><a href="">{{t}}</a></li>
+                                                            {% endfor %}
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-lg-6">
+                                                    <div class="post-share">
+                                                        <h5 class="title">Share:</h5>
+                                                        <ul class="list-wrap">
+                                                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div> {% if b.user == request.user %}
+                                   <div style="margin: 5px 0 20px 0; display: flex; justify-content: end;">
+                                    <a href="{% url 'edit_blog' b.slug %}"><button class="btn"><i class="fa-solid fa-pen-to-square" style="margin-right: 7px;"></i>  Maqolani tahrirlash</button></a>
+                                    <a href="{% url 'remove_blog' b.slug %}" style="margin-left: 10px;"><button style="background: red !important;" class="btn"><i class="fa-solid fa-trash" style="margin-right: 7px;"></i> Maqolani o'chirish</button></a>  
+                                   </div> {% endif %}
+                                    <div class="blog-avatar-wrap mb-50">
+                                        <div class="blog-avatar-img">
+                                            <a href="#"><img src="{{b.user.image.url}}" alt="img"></a>
+                                        </div>
+                                        <div class="blog-avatar-info">
+                                            <span class="designation">Muallif</span>
+                                            <h4 class="name"><a href="{% url 'author' b.user.uuid  %}">{{b.user.full_name}}</a></h4>
+                                            <p>{{b.user.about|default:''}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="pev-next-post-wrap">
+                                       
+
+
+                                      
+                                       
+                                    </div>
+                                    <div class="comments-wrap">
+                                        <h3 class="comments-wrap-title">{{b.commnets}} Izohlar</h3>
+                                        <div class="latest-comments">
+                                            <ul class="list-wrap">
+                                                <li>
+                                                    
+                                                    {% for c in b.comments %}
+                                                    <div class="comments-box">
+                                                        <div class="comments-avatar">
+                                                            <img src="{{c.user.image.url}}" alt="img">
+                                                        </div>
+                                                        <div class="comments-text">
+                                                            <div class="avatar-name">
+                                                                <h6 class="name">{{c.user.full_name}}</h6>
+                                                                <span class="date">{{c.created_date|date:"d.m.Y H:i"}}</span>
+                                                            </div>
+                                                            <p>{{c.comment}}</p>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    {% empty %}
+                                                    <p><i>Izohlar mavjud emas</i></p>
+                                                   {% endfor %}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="comment-respond">
+                                        <h3 class="comment-reply-title">Izoh yozish</h3>
+                                        
+                                            
+                                            {% if request.user.is_authenticated %}
+                                            <form  method="POST" class="comment-form">{% csrf_token %}
+                                            <div class="form-grp">
+                                                <textarea name="comment" placeholder="Izohingiz"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-two">Saqlash</button>
+                                        </form>
+                                            {% else %}
+                                            <p class="comment-notes">Izoh yozish uchun tizimga <a href="{% url 'login' %}"><i class="flaticon-user"></i> Kirish</a></p>
+                                            {% endif %}
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-30">
+                                <div class="sidebar-wrap">
+                                   
+                                    <div class="sidebar-widget sidebar-widget-two">
+                                        <div class="widget-title mb-30">
+                                            <h6 class="title">Kategoriyalar</h6>
+                                            <div class="section-title-line"></div>
+                                        </div>
+                                        <div class="sidebar-categories">
+                                            <ul class="list-wrap">
+                                                {% for c in ct %}
+                                                <li>
+                                                    <a href="{% url 'blog_category' c.slug %}" data-background="{{c.image.url}}">
+                                                        <span class="post-tag post-tag-three">{{c.name}}</span>
+                                                        <span class="right-arrow">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
+                                                                <path d="M1.72308 16L0 14.2769L11.8154 2.46154H1.23077V0H16V14.7692H13.5385V4.18462L1.72308 16Z" fill="currentcolor"></path>
+                                                                <path d="M1.72308 16L0 14.2769L11.8154 2.46154H1.23077V0H16V14.7692H13.5385V4.18462L1.72308 16Z" fill="currentcolor"></path>
+                                                            </svg>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-widget sidebar-widget-two">
+                                        <div class="widget-title mb-25">
+                                            <h2 class="title">Hash teglar</h2>
+                                            <div class="section-title-line"></div>
+                                        </div>
+                                        <div class="sidebar-social-wrap">
+                                            <ul class="list-wrap">
+                                                {% for t in tags %}
+                                                <li><a href="#">{{t.name}}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-widget sidebar-widget-two">
+                                        <div class="widget-title mb-30">
+                                            <h6 class="title">O'xshash maqolalar</h6>
+                                            <div class="section-title-line"></div>
+                                        </div>
+                                        <div class="hot-post-wrap">
+                                            {% for p in blogs %}
+                                            <div class="hot-post-item">
+                                                <div class="hot-post-thumb">
+                                                    <a href="{% url 'blog_detail' p.slug %}"><img src="{{p.image.url}}" alt=""></a>
+                                                </div>
+                                                <div class="hot-post-content">
+                                                    <a href="{% url 'blog_category' p.category.slug %}" class="post-tag">{{p.category.name}}</a>
+                                                    <h4 class="post-title"><a href="{% url 'blog_detail' p.slug %}">{{p.title}}s</a></h4>
+                                                    <div class="blog-post-meta">
+                                                        <ul class="list-wrap">
+                                                            <li><i class="flaticon-calendar"></i>{{p.date|date:"d.m.Y"}}</li>
+                                                            <li><i class="fa-solid fa-eye"></i>{{p.views_count}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% empty %}
+                                            <p>Mavjud emas</p>
+                                           {% endfor %}
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- blog-details-area-end -->
+
+        </main>
+        <!-- main-area-end -->
+
+        {% endblock %}

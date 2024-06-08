@@ -1,0 +1,366 @@
+{% extends 'base.html' %} {% load static %}{% load hitcount_tags %}
+     {% block content %}
+        <!-- main-area -->
+        <main class="fix">
+
+            <!-- banner-post-area -->
+            <section class="banner-post-area-two pt-50 pb-30">
+                <div class="container">
+                    <div class="banner-post-inner">
+                        <div class="row">
+                            <div class="col-70">
+                                <div class="banner-post-two big-post">
+                                    <div class="banner-post-thumb-two">
+                                        <a href="{% url 'blog_detail' main.slug %}"><img src="{{main.image.url}}" alt=""></a>
+                                    </div>
+                                    <div class="banner-post-content-two">
+                                        <a href="{% url 'blog_category' main.category.slug %}" class="post-tag">{{main.category.name}}</a>
+                                        <h2 class="post-title bold-underline"><a href="{% url 'blog_detail' main.slug %}">{{main.title}}</a></h2>
+                                        <div class="blog-post-meta white-blog-meta">
+                                            <ul class="list-wrap">
+                                                <li><i class="flaticon-user"></i>Muallif:<a href="{% url 'author' main.user.uuid %}">{{main.user.full_name}}</a></li>
+                                                <li><i class="flaticon-calendar"></i>{{main.date|date:"d.m.Y H:i"}}</li>
+                                                <li><i class="fa-solid fa-eye"></i>{{main.views_count}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-30">
+                                {% for b in top_blogs %}
+                                <div class="banner-post-two small-post">
+                                    <div class="banner-post-thumb-two">
+                                        <a href="{% url 'blog_detail' b.slug %}"><img src="{{b.image.url}}" alt=""></a>
+                                    </div>
+                                    <div class="banner-post-content-two">
+                                        <a href="{% url 'blog_category' b.category.slug %}" class="post-tag">{{b.category.name}}</a>
+                                        <h2 class="post-title"><a href="{% url 'blog_detail' b.slug %}">{{b.title}}</a></h2>
+                                        <div class="blog-post-meta white-blog-meta">
+                                            <ul class="list-wrap">
+                                                <li><i class="flaticon-calendar"></i>{{b.create_date|date:"d.m.Y H:i"}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                               {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- banner-post-area-end -->
+
+            <!-- ad-banner-area -->
+            <!-- <div class="ad-banner-area">
+                <div class="container">
+                    <div class="ad-banner-img ad-banner-img-two text-center">
+                        <a href="#">
+                            <img src="{% static 'home/assets/img/images/advertisement05.jpg' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div> -->
+            <!-- ad-banner-area-end -->
+
+            <!-- editor-post-area -->
+            <section class="editor-post-area pt-50">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-title-wrap mb-30">
+                                <div class="section-title">
+                                    <h2 class="title">Mualliflar</h2>
+                                </div>
+                                <div class="editor-nav"></div>
+                                <div class="section-title-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="editor-post-wrap">
+                        <div class="row editor-post-active">
+                            {% for a in authors %}
+                            <div class="col-lg-4">
+                                <div class="editor-post-item">
+                                    <div class="editor-post-thumb">
+                                        <a href=""><img src="{{a.image.url}}" alt=""></a>
+                                    </div>
+                                    <div class="editor-post-content">
+                                        <h2 class="post-title"><a href="">{{a.full_name}}</a></h2>
+                                        <div class="blog-post-meta">
+                                            <ul class="list-wrap">
+                                                <li><i class="flaticon-calendar"></i>{{a.username|default:""}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- editor-post-area-end -->
+
+            <!-- trending-post-area -->
+            <section class="trending-post-area pt-60 pb-60">
+                <div class="container">
+                    <div class="trending-post-inner">
+                        <div class="row justify-content-center">
+                            <div class="col-70">
+                                <div class="recent-post-wrap">
+                                    <div class="section-title-wrap mb-30">
+                                        <div class="section-title">
+                                            <h2 class="title">So'nggi maqolalar</h2>
+                                        </div>
+                                        <div class="view-all-btn">
+                                            <a href="{% url 'blogs' %}" class="link-btn">Barchasini ko'rish
+                                                <span class="svg-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="none">
+                                                        <path d="M1.07692 10L0 8.92308L7.38462 1.53846H0.769231V0H10V9.23077H8.46154V2.61538L1.07692 10Z" fill="currentColor" />
+                                                        <path d="M1.07692 10L0 8.92308L7.38462 1.53846H0.769231V0H10V9.23077H8.46154V2.61538L1.07692 10Z" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div class="section-title-line"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-54">
+                                            <div class="overlay-post-two">
+                                                <div class="overlay-post-thumb">
+                                                    <a href="{% url 'blog_detail' recent_blog.slug %}"><img src="{{recent_blog.image.url}}" alt=""></a>
+                                                </div>
+                                                <div class="overlay-post-content">
+                                                    <a href="{% url 'blog_category' recent_blog.category.slug %}" class="post-tag">{{recent_blog.category.name}}</a>
+                                                    <h2 class="post-title"><a href="{% url 'blog_detail' recent_blog.slug %}">{{recent_blog.title}}</a></h2>
+                                                    <div class="blog-post-meta white-blog-meta">
+                                                        <ul class="list-wrap">
+                                                            <li><i class="flaticon-user"></i>Muallif <a href="{% url 'author' recent_blog.user.uuid %}">{{recent_blog.user.full_name}}</a></li>
+                                                            <li><i class="flaticon-calendar"></i>{{recent_blog.date|date:"d.m.Y H:i"}}</li>
+                                                <li><i class="fa-solid fa-eye"></i>{% get_hit_count for recent_blog %}</li>
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-46">
+                                            {% for b in recent_blogs %}
+                                            <div class="horizontal-post-two">
+                                                <div class="horizontal-post-thumb">
+                                                    <a href="{% url 'blog_detail' b.slug %}"><img src="{{b.image.url}}" alt=""></a>
+                                                </div>
+                                                <div class="horizontal-post-content">
+                                                    <a href="{% url 'blog_category' b.category.slug %}" class="post-tag">
+                                                        {{b.category.name}}
+                                                    </a>
+                                                    <h2 class="post-title"><a href="{% url 'blog_detail' b.slug %}"> {{b.title}}</a></h2>
+                                                    <div class="blog-post-meta">
+                                                        <ul class="list-wrap">
+                                                            <li><i class="flaticon-calendar"></i>{{b.create_date|date:"d.m.Y H:i"}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                               
+                            </div>
+                            <div class="col-30">
+                                <div class="sidebar-wrap">
+                                    <div class="sidebar-widget sidebar-widget-two">
+                                        <div class="widget-title mb-30">
+                                            <h6 class="title">Bizning ijtimoiy tarmoqlar</h6>
+                                            <div class="section-title-line"></div>
+                                        </div>
+                                        <div class="sidebar-social-wrap">
+                                            <ul class="list-wrap">
+                                                {% for s in social %}
+                                                <li><a href="{{s.url}}" target="_blank">{{s.icon|safe}}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="sidebar-widget sidebar-widget-two">
+                                        <div class="widget-title mb-30">
+                                            <h6 class="title">Kategoriyalar</h6>
+                                            <div class="section-title-line"></div>
+                                        </div>
+                                        <div class="sidebar-categories">
+                                            <ul class="list-wrap">
+                                                {% for c in ct %}
+                                                <li>
+                                                    <a href="{% url 'blog_category' c.slug %}" data-background="{{c.image.url}}">
+                                                        <span class="post-tag post-tag-three">{{c.name}}</span>
+                                                        <span class="right-arrow">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
+                                                                <path d="M1.72308 16L0 14.2769L11.8154 2.46154H1.23077V0H16V14.7692H13.5385V4.18462L1.72308 16Z" fill="currentcolor"></path>
+                                                                <path d="M1.72308 16L0 14.2769L11.8154 2.46154H1.23077V0H16V14.7692H13.5385V4.18462L1.72308 16Z" fill="currentcolor"></path>
+                                                            </svg>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                               {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="weekly-post-area pt-80 pb-80">
+                <div class="container">
+                    <div class="weekly-post-inner-wrap">
+                        <div class="row justify-content-center">
+                            <div class="col-70">
+                                <div class="section-title-wrap-three mb-40">
+                                    <div class="section-title-three">
+                                        <h6 class="title">Haftaning eng ommabop maqolalari
+                                            <span class="section-title-svg">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 246 40" fill="none" preserveAspectRatio="none">
+                                                    <path d="M10.1448 2.85061C10.6524 1.15867 12.2097 0 13.9761 0H241.624C244.303 0 246.225 2.58294 245.455 5.14939L235.855 37.1494C235.348 38.8413 233.79 40 232.024 40H4.37612C1.69667 40 -0.225117 37.4171 0.544817 34.8506L10.1448 2.85061Z" fill="currentcolor"></path>
+                                                </svg>
+                                            </span>
+                                        </h6>
+                                        <div class="section-title-line-three"></div>
+                                    </div>
+                                </div>
+                                <div class="weekly-post-item-wrap">
+                                    {% for b in week_top_models %}
+                                    <div class="weekly-post-item">
+                                        <div class="weekly-post-thumb">
+                                            <a href="{% url 'blog_detail' b.slug %}"><img src="{{b.image.url}}" alt=""></a>
+                                        </div>
+                                        <div class="weekly-post-content">
+                                            <a href="{% url 'blog_category' b.category.slug %}" class="post-tag">{{b.category.name}}</a>
+                                            <h2 class="post-title"><a href="{% url 'blog_detail' b.slug %}">{{b.title}}</a></h2>
+                                            <div class="blog-post-meta">
+                                                <ul class="list-wrap">
+                                                    <li><i class="flaticon-calendar"></i>{{b.create_date|date:"d.m.Y"}}</li>
+                                    <li><i class="fa-solid fa-eye"></i>{{b.views_count}}</li>
+                                                </ul>
+                                            </div>
+                                            <p>{{b.sub_title|default:''}}</p>
+                                            <div class="view-all-btn">
+                                                <a href="{% url 'blog_detail' b.slug %}" class="link-btn">Ko'proq
+                                                    <span class="svg-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="none">
+                                                            <path d="M1.07692 10L0 8.92308L7.38462 1.53846H0.769231V0H10V9.23077H8.46154V2.61538L1.07692 10Z" fill="currentColor"></path>
+                                                            <path d="M1.07692 10L0 8.92308L7.38462 1.53846H0.769231V0H10V9.23077H8.46154V2.61538L1.07692 10Z" fill="currentColor"></path>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-30">
+                                <div class="sidebar-wrap sidebar-wrap-two">
+                                    <div class="sidebar-widget sidebar-widget-two">
+                                        <div class="widget-title-two mb-30">
+                                            <h6 class="title">Eng ko'p ko'rilgan maqolalar
+                                                <span class="section-title-svg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 246 40" fill="none" preserveAspectRatio="none">
+                                                        <path d="M10.1448 2.85061C10.6524 1.15867 12.2097 0 13.9761 0H241.624C244.303 0 246.225 2.58294 245.455 5.14939L235.855 37.1494C235.348 38.8413 233.79 40 232.024 40H4.37612C1.69667 40 -0.225117 37.4171 0.544817 34.8506L10.1448 2.85061Z" fill="currentcolor"></path>
+                                                    </svg>
+                                                </span>
+                                            </h6>
+                                            <div class="section-title-line-three"></div>
+                                        </div>
+                                        <div class="hot-post-wrap">
+                                            {% for b in trending_blogs %}
+                                            <div class="hot-post-item">
+                                                <div class="hot-post-thumb">
+                                                    <a href="{% url 'blog_detail' b.slug %}"><img src="{{b.image.url}}" alt=""></a>
+                                                </div>
+                                                <div class="hot-post-content">
+                                                    <a href="{% url 'blog_category' b.category.slug %}" class="post-tag-two">{{b.category.name}}</a>
+                                                    <h4 class="post-title"><a href="{% url 'blog_detail' b.slug %}">{{b.title}}</a></h4>
+                                                    <div class="blog-post-meta">
+                                                        <ul class="list-wrap">
+                                                            <li><i class="flaticon-calendar"></i>{{b.create_date|date:"d.m.Y"}}</li>
+                                    <li><i class="fa-solid fa-eye"></i>{{b.views_count}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           {% endfor %}
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- trending-post-area-end -->
+<div class="container">
+    <div class="section-title-wrap mb-30">
+        <div class="section-title">
+            <h2 class="title">Oyning eng ommabop maqolalari</h2>
+        </div>
+        <div class="view-all-btn">
+            <a href="{% url 'blogs' %}" class="link-btn">Barchasini ko'rish
+                <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="none">
+                        <path d="M1.07692 10L0 8.92308L7.38462 1.53846H0.769231V0H10V9.23077H8.46154V2.61538L1.07692 10Z" fill="currentColor" />
+                        <path d="M1.07692 10L0 8.92308L7.38462 1.53846H0.769231V0H10V9.23077H8.46154V2.61538L1.07692 10Z" fill="currentColor" />
+                    </svg>
+                </span>
+            </a>
+        </div>
+        <div class="section-title-line"></div>
+    </div>
+</div>
+        <!-- overlay-post-area -->
+<section class="overlay-post-area fix">
+    <div class="container-fluid p-0">
+        <div class="overlay-post-item-wrap">
+            <div class="row overlay-post-active">
+                {% for b in month_top_models %}
+                <div class="col-lg-3">
+                    <div class="overlay-post-three">
+                        <div class="overlay-post-thumb-three">
+                            <a href="{% url 'blog_detail' b.slug %}"><img src="{{b.image.url}}" alt=""></a>
+                        </div>
+                        <div class="overlay-post-content-three">
+                            <a href="{% url 'blog_category' b.category.slug %}" class="post-tag">{{b.category.name}}</a>
+                            <h2 class="post-title bold-underline"><a href="{% url 'blog_detail' b.slug %}">{{b.title}}</a></h2>
+                            <div class="blog-post-meta white-blog-meta">
+                                <ul class="list-wrap">
+                                    <li><i class="flaticon-user"></i>Muallif<a href="{% url 'author' b.user.uuid %}">{{b.user.full_name}}</a></li>
+                                    <li><i class="flaticon-calendar"></i>{{b.create_date|date:"d.m.Y"}}</li>
+                                    <li><i class="fa-solid fa-eye"></i>{{b.views_count}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+               
+            </div>
+        </div>
+    </div>
+</section>
+<!-- overlay-post-area-end -->
+
+            
+
+          
+
+         
+
+        </main>
+        <!-- main-area-end -->
+   
+        {% endblock %}

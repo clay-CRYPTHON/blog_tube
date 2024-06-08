@@ -1,0 +1,128 @@
+{% extends 'base.html' %} {% load static %}
+     {% block content %}
+
+        <!-- main-area -->
+        <main class="fix">
+
+            <!-- breadcrumb-area -->
+            <div class="breadcrumb-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="breadcrumb-content">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Biz haqimizda</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- breadcrumb-area-end -->
+
+            <!-- about-area -->
+            <section class="about-area pt-80 pb-80">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-7 col-md-10 order-0 order-lg-2">
+                            <div class="about-img">
+                                <div class="left-img">
+                                    <img src="{{about.img1.url}}" alt="">
+                                    <img src="{{about.img2.url}}" alt="">
+                                </div>
+                                <div class="right-img">
+                                    <img src="{{about.img3.url}}" alt="">
+                                </div>
+                                <img src="{% static 'home/assets/img/images/about_shape.png' %}" alt="" class="shape">
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="about-content">
+                                <div class="section-title-five">
+                                    <span class="sub-title">{{about.min_content}}</span>
+                                    <h2 class="title">{{about.title}}</h2>
+                                </div>
+                                <span>{{about.sub_title}}</span>
+                                <p>{{about.content}}</p>
+                                <div class="view-all-btn">
+                                    <a href="{{about.btn_url}}" class="btn btn-two link-btn">{{about.btn_name}}
+                                        <span class="svg-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="none">
+                                                <path d="M1.07692 10L0 8.92308L7.38462 1.53846H0.769231V0H10V9.23077H8.46154V2.61538L1.07692 10Z" fill="currentColor" />
+                                                <path d="M1.07692 10L0 8.92308L7.38462 1.53846H0.769231V0H10V9.23077H8.46154V2.61538L1.07692 10Z" fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- about-area-end -->
+
+            <!-- team-area -->
+            <section class="team-area">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-6 col-lg-8">
+                            <div class="section-title-five text-center mb-30">
+                                <span class="sub-title">{{team.min_content}}</span>
+                                <h2 class="title">{{team.title}}</h2>
+                                <p>{{team.content}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        {% for a in authors %}
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-10">
+                            <div class="team-item">
+                                <div class="team-thumb">
+                                    <img src="{{a.image.url}}" alt="">
+                                    <div class="team-social">
+                                        <ul class="list-wrap">
+                                            {% if a.telegram_link %}
+                                            <li><a href="{{a.telegram_link}}" target="_blank"><i class="fab fa-telegram"></i></a></li>
+                                            {% endif %}
+                                            {% if a.email %}
+                                            <li><a href="mailto:{{a.email}}" target="_blank"><i class="fa-regular fa-envelope"></i></a></li>
+                                            {% endif %}
+                                            {% if a.facebook_link %}
+                                            <li><a href="{{a.facebook_link}}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                            {% endif %}
+                                            {% if a.instagram_link %}
+                                            <li><a href="{{a.instagram_link}}" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                            {% endif %}
+                                            {% if a.whatsapp_link %}
+                                            <li><a href="{{a.whatsapp_link}}" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+                                            {% endif %}
+                                            {% if a.github_link %}
+                                            <li><a href="{{a.github_link}}" target="_blank"><i class="fab fa-github"></i></a></li>
+                                            {% endif %}
+                                            {% if a.portfilo_link %}
+                                            <li><a href="{{a.portfilo_link}}" target="_blank"><i class="fab fa-gitlab"></i></a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="team-content">
+                                    <h4 class="title">{{a.full_name}}</h4>
+                                    <span>@{{a.username}}</span>
+                                </div>
+                            </div>
+                        </div>
+                       {% endfor %}
+                    </div>
+                </div>
+            </section>
+            <!-- team-area-end -->
+
+          
+
+        </main>
+        <!-- main-area-end -->
+
+        {% endblock %}
